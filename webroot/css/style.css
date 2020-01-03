@@ -4,3 +4,8 @@
         max-width: 2280px;
     }
 }
+
+.image-preview {
+    width: 250px;
+    height: auto;
+}

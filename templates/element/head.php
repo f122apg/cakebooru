@@ -16,6 +16,7 @@ use Cake\Core\Configure;
 
 <?= $this->Html->css('BootstrapUI.bootstrap.min', ['block' => true]) ?>
 <?= $this->Html->script('BootstrapUI.bootstrap.min', ['block' => true]) ?>
+<?= $this->Html->script('BootstrapUI.jquery.min') ?>
 
 <?= $this->Html->css('style', ['block' => true]) ?>
 <?= $this->fetch('meta') ?>

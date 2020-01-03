@@ -7,6 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Error\Debugger;
 
 /**
  * Posts Model
@@ -64,22 +65,6 @@ class PostsTable extends Table
             ->nonNegativeInteger('id')
             ->allowEmptyString('id', null, 'create');
 
-        $validator
-            ->scalar('filename')
-            ->maxLength('filename', 128)
-            ->allowEmptyFile('filename');
-
-        $validator
-            ->scalar('ext')
-            ->maxLength('ext', 15)
-            ->requirePresence('ext', 'create')
-            ->notEmptyString('ext');
-
-        $validator
-            ->scalar('tags')
-            ->requirePresence('tags', 'create')
-            ->notEmptyString('tags');
-
         return $validator;
     }
 
@@ -95,5 +80,23 @@ class PostsTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
+    }
+
+    /**
+     * beforeSave
+     *
+     * @param Event $event event
+     * @param EntityInterface $entity entity
+     * @param array $options options
+     * @return bool
+     */
+    public function beforeSave($event, $entity, $options) : bool
+    {
+        //新規追加の場合、アップロードされたファイルを保存する
+        if ($entity->isNew()) {
+            $entity->prepareInsert();
+        }
+
+        return true;
     }
 }

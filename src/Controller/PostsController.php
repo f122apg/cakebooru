@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Error\Debugger;
+
 /**
  * Posts Controller
  *
@@ -54,11 +56,11 @@ class PostsController extends AppController
         if ($this->request->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
             if ($this->Posts->save($post)) {
-                $this->Flash->success(__('The post has been saved.'));
+                $this->Flash->success(__d('cakebooru', 'Yay! This image uploaded.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
+            $this->Flash->error(__d('cakebooru', 'The post could not be saved. Please, try again.'));
         }
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
         $this->set(compact('post', 'users'));

@@ -400,5 +400,8 @@ return [
     ],
 
     //app name
-    'AppName' => 'CakeBooru'
+    'AppName' => 'CakeBooru',
+
+    //uploaded image destination
+    'UploadedImageDest' => '/path/to/your'
 ];
