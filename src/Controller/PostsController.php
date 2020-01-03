@@ -38,9 +38,7 @@ class PostsController extends AppController
      */
     public function view($id = null)
     {
-        $post = $this->Posts->get($id, [
-            'contain' => ['Users', 'Favorites'],
-        ]);
+        $post = $this->Posts->get($this->request->getQuery('id'));
 
         $this->set('post', $post);
     }

@@ -10,7 +10,14 @@ use App\Utility\File;
         <?php foreach($posts as $post): ?>
             <div class="col-auto pt-3">
                 <div class="card h-100">
-                    <a href="#">
+                    <?php $detailsUrl = $this->Url->build([
+                        'controller' => 'Posts',
+                        'action' => 'view',
+                        '?' => [
+                            'id' => $post->id
+                        ]
+                    ]) ?>
+                    <a href="<?= $detailsUrl ?>">
                         <img class="card-img-top" src="data:image/jpg;base64,<?= File::getThumbnailFileContent($post->thumbnail) ?>">
                     </a>
                 </div>
