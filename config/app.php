@@ -398,4 +398,7 @@ return [
     'Session' => [
         'defaults' => 'php',
     ],
+
+    //app name
+    'AppName' => 'CakeBooru'
 ];

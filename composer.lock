@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78f0813d2e19252372610ff0834d4122",
+    "content-hash": "8d3728ab37b6e195b446b7d479217dbd",
     "packages": [
         {
             "name": "aura/intl",
@@ -351,6 +351,57 @@
                 "tls"
             ],
             "time": "2019-12-11T14:44:42+00:00"
+        },
+        {
+            "name": "friendsofcake/bootstrap-ui",
+            "version": "dev-cake-4-bs-4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfCake/bootstrap-ui.git",
+                "reference": "c1bd2adcce74ad5beaeba031996a160af537446a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfCake/bootstrap-ui/zipball/c1bd2adcce74ad5beaeba031996a160af537446a",
+                "reference": "c1bd2adcce74ad5beaeba031996a160af537446a",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0"
+            },
+            "require-dev": {
+                "cakephp/bake": "^2.0",
+                "cakephp/cakephp-codesniffer": "^4.0",
+                "phpunit/phpunit": "~8.5.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "BootstrapUI\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/friendsofcake/bootstrap-ui/graphs/contributors"
+                }
+            ],
+            "description": "Bootstrap 3 support for CakePHP",
+            "homepage": "http://github.com/friendsofcake/bootstrap-ui",
+            "keywords": [
+                "bootstrap",
+                "cakephp"
+            ],
+            "time": "2019-12-25T13:01:22+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -4463,6 +4514,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "friendsofcake/bootstrap-ui": 20,
         "psy/psysh": 0
     },
     "prefer-stable": true,
