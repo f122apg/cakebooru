@@ -1,0 +1,6 @@
+/* 4k support */
+@media screen and (min-width: 3000px) {
+    .container {
+        max-width: 2280px;
+    }
+}

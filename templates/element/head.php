@@ -12,9 +12,12 @@ use Cake\Core\Configure;
 <?php //M PLUS Roundedフォントを使用 ?>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 
 <?= $this->Html->css('BootstrapUI.bootstrap.min', ['block' => true]) ?>
 <?= $this->Html->script('BootstrapUI.bootstrap.min', ['block' => true]) ?>
+
+<?= $this->Html->css('style', ['block' => true]) ?>
 <?= $this->fetch('meta') ?>
 <?= $this->fetch('css') ?>
 <?= $this->fetch('script') ?>
