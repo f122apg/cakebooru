@@ -36,4 +36,26 @@ class File
     {
         return file_exists(Configure::read('UploadedImageDest') . '/' . $filename);
     }
+
+    /**
+     * アップロードされたファイルの中身を取得
+     *
+     * @param string $filename ファイル名
+     * @return string
+     */
+    public static function getUploadedFileContent(string $filename) : string
+    {
+        return file_get_contents(Configure::read('UploadedImageDest') . '/' . $filename);
+    }
+
+    /**
+     * サムネイルの中身を取得
+     *
+     * @param string $filename ファイル名
+     * @return string
+     */
+    public static function getThumbnailFileContent(string $filename) : string
+    {
+        return file_get_contents(Configure::read('ThumbnailImageDest') . '/' . $filename);
+    }
 }

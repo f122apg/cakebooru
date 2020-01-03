@@ -403,5 +403,7 @@ return [
     'AppName' => 'CakeBooru',
 
     //uploaded image destination
-    'UploadedImageDest' => '/path/to/your'
+    'UploadedImageDest' => '/path/to/your/uploaded_images',
+    //thumbnail destination
+    'ThumbnailImageDest' => '/path/to/your/thumbnails'
 ];

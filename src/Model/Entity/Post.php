@@ -78,9 +78,9 @@ class Post extends Entity
         //tmpファイルのパスを取得
         $meta = stream_get_meta_data($tmp);
         //tmpファイルを.jpg等にrename（これをしないと、encodeImageしたときに.tmpで保存されてしまうため）
-        $tmpInfo = pathinfo($meta["uri"]);
+        $tmpInfo = pathinfo($meta['uri']);
         $tmpPath = $tmpInfo['dirname'] . '/' . $tmpInfo['filename'] . '.' . File::getExt($filename);
-        rename($meta["uri"], $tmpPath);
+        rename($meta['uri'], $tmpPath);
         //tmpファイルへアップロードされたファイルを書き込み
         $this->file->moveTo($tmpPath);
         //tmpファイルへ書き込まれた画像ファイルをbase64にして保存しなおす
@@ -99,5 +99,6 @@ class Post extends Entity
     {
         $this->filename = $this->uploadFile();
         $this->ext = File::getExt($this->filename);
+        $this->thumbnail = Image::createThumbnail(Configure::read('UploadedImageDest') . '/' . $this->filename);
     }
 }
