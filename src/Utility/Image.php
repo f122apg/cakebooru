@@ -162,7 +162,7 @@ class Image
      * @param string $path 画像のファイルパス
      * @return array
      */
-    public function getImageSize($path) : array
+    public static function getImageSize($path) : array
     {
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->file($path);
