@@ -1,7 +1,49 @@
+@media screen and (min-width: 320px) {
+    .thumbnail-container {
+        max-width: 100px;
+    }
+
+    .card-columns {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .thumbnail-container {
+        max-width: 300px;
+    }
+
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+}
+
+@media screen and (min-width: 1140px) {
+    .thumbnail-container {
+        max-width: 500px;
+    }
+
+    .card-columns {
+        -webkit-column-count: 5;
+        -moz-column-count: 5;
+        column-count: 5;
+    }
+}
+
 /* 4k support */
 @media screen and (min-width: 3000px) {
     .container {
         max-width: 2280px;
+    }
+
+    .card-columns {
+        -webkit-column-count: 10;
+        -moz-column-count: 10;
+        column-count: 10;
     }
 }
 
