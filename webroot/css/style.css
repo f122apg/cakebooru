@@ -55,3 +55,10 @@
 .image-container {
     max-width: 700px;
 }
+
+/* 文字を中央に揃える */
+.card-img-overlay{
+    padding: 0;
+    top: calc(50% - 1rem);
+    text-align: center;
+}

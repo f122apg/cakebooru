@@ -20,6 +20,11 @@ use App\Utility\File;
                 <div class="card">
                     <a href="<?= $detailsUrl ?>">
                         <img class="card-img-top thumbnail-container" src="data:image/jpg;base64,<?= File::getThumbnailFileContent($post->thumbnail) ?>">
+                        <?php if ($post->ext === 'gif') : ?>
+                            <div class="card-img-overlay">
+                                <i class="far fa-play-circle fa-2x text-success"></i>
+                            </div>
+                        <?php endif ?>
                     </a>
                 </div>
             <?php endforeach ?>
