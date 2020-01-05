@@ -57,8 +57,28 @@
 }
 
 /* 文字を中央に揃える */
-.card-img-overlay{
+.card-img-overlay {
     padding: 0;
     top: calc(50% - 1rem);
     text-align: center;
+}
+
+.chips {
+    display: inline-block;
+    background: rgb(209, 209, 209);
+    border-radius: 12px;
+    padding: 1px 5px 1px 6px;
+}
+
+.chips > i {
+    font-size: 0.9em;
+    background: rgb(92, 92, 92);
+    color: white;
+    border-radius: 15px;
+    padding: 1px;
+    cursor: pointer;
+}
+
+[v-cloak] {
+    display: none;
 }

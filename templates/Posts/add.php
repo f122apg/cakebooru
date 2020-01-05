@@ -5,9 +5,13 @@
  */
 ?>
 <?php $this->Html->script('posts_add', ['block' => true]) ?>
+<?= $this->element('jsIntl') ?>
 
-<div class="posts form content container">
-    <?= $this->Form->create($post, ['type' => 'file']) ?>
+<div id="vue" class="posts form content container">
+    <?= $this->Form->create($post, [
+        'type' => 'file',
+        'id' => 'postForm'
+    ]) ?>
     <fieldset>
         <legend><?= __d('cakebooru', 'Add post') ?></legend>
         <?= $this->Form->hidden('user_id', ['value' => 1]) ?>
@@ -29,12 +33,36 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-8">
-                <?= $this->Form->control('tags', [
-                    'label' => __d('cakebooru', 'Tags'),
-                    'help' => __d('cakebooru', 'tag separate "@"'),
-                    'required' => false
-                ]) ?>
+            <div class="col-4">
+                <div class="form-group">
+                    <?= $this->Form->label('tag', __d('cakebooru', 'Tag')); ?>
+                    <div class="input-group">
+                        <?= $this->Form->text('tag', [
+                            'id' => 'tag',
+                            'onkeydown' => 'if (event.key === "Enter") { $("#tagAdd").click(); $("#tag").val(""); return false; }'
+                        ]) ?>
+                        <div class="input-group-append">
+                            <?= $this->Form->button('Add', [
+                                'type' => 'button',
+                                'id' => 'tagAdd',
+                                'v-on:click' => 'addTag',
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger p-1 text-center" role="alert" v-cloak v-if="tag.addError">
+                        {{ tag.addErrorMsg }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <p><?= __d('cakebooru', 'Tags') ?></p>
+                <div v-for="(tag, i) in tag.tags" class="d-inline-block pr-1">
+                    <p class="chips" v-cloak v-bind:data-tag-index="i">
+                        {{ tag }}
+                        <i class="material-icons"
+                            v-on:click="removeTag">close</i>
+                    </p>
+                </div>
             </div>
             <div class="offset-4"></div>
         </div>
