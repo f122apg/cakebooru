@@ -32,13 +32,17 @@ $(function(){
 
                 if (this.addTagValidation(tag)) {
                     this.tag.tags.push(tag);
+                    $('#tag').val('');
                 }
             },
             removeTag: function(event) {
                 let index = $($(event.target).parent()).attr('data-tag-index');
                 this.tag.tags.splice(index, 1);
+            },
+            tagInputName: function (i) {
+                return 'tags[' + i + '][tag]';
             }
-        }
+        },
     });
 });
 

@@ -35,10 +35,18 @@ class TagsTable extends Table
         parent::initialize($config);
 
         $this->setTable('tags');
-        $this->setDisplayField('tag');
-        $this->setPrimaryKey('tag');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        // $this->addBehavior('CounterCache', [
+        //     'Tags' => [
+        //         'tag_count' => [
+        //             'finder' => 'tag'
+        //         ]
+        //     ]
+        // ]);
+        $this->belongsToMany('Posts');
     }
 
     /**
@@ -49,14 +57,14 @@ class TagsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->scalar('tag')
-            ->maxLength('tag', 255)
-            ->allowEmptyString('tag', null, 'create');
+        // $validator
+        //     ->scalar('tag')
+        //     ->maxLength('tag', 255)
+        //     ->allowEmptyString('tag', null, 'create');
 
-        $validator
-            ->integer('tag_count')
-            ->allowEmptyString('tag_count');
+        // $validator
+        //     ->integer('tag_count')
+        //     ->allowEmptyString('tag_count');
 
         return $validator;
     }

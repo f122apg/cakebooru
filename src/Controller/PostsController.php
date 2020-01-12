@@ -14,6 +14,13 @@ use Cake\Error\Debugger;
  */
 class PostsController extends AppController
 {
+    public function initialize() : void
+    {
+        parent::initialize();
+
+        $this->loadModel('Tags');
+    }
+
     /**
      * Index method
      *
@@ -52,17 +59,25 @@ class PostsController extends AppController
     public function add()
     {
         $post = $this->Posts->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
-            if ($this->Posts->save($post)) {
-                $this->Flash->success(__d('cakebooru', 'Yay! This image uploaded.'));
+        $this->set(compact('post'));
 
+        if ($this->request->is('post')) {
+            try {
+                $post = $this->Posts->patchEntity($post, $this->request->getData(), [
+                    'associated' => [
+                        'Tags',
+                    ]
+                ]);
+
+                //saveに失敗（バリデーションエラーも含む）したら、例外が発行される
+                $this->Posts->saveOrFail($post);
+                $this->Flash->success(__d('cakebooru', 'Yay! This image uploaded.'));
                 return $this->redirect(['action' => 'index']);
+            } catch (Exception $ex) {
+                $this->Flash->error(__d('cakebooru', 'The post could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__d('cakebooru', 'The post could not be saved. Please, try again.'));
+
         }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'users'));
     }
 
     /**

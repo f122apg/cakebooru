@@ -8,7 +8,8 @@ use Cake\ORM\Entity;
 /**
  * Tag Entity
  *
- * @property string $tag
+ * @property int $id
+ * @property string|null $tag
  * @property int|null $tag_count
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
@@ -25,6 +26,7 @@ class Tag extends Entity
      * @var array
      */
     protected $_accessible = [
+        'tag' => true,
         'tag_count' => true,
         'created' => true,
         'modified' => true,

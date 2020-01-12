@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <?= $this->Form->label('tag', __d('cakebooru', 'Tag')); ?>
                     <div class="input-group">
-                        <?= $this->Form->text('tag', [
+                        <?= $this->Form->text('tagInput', [
                             'id' => 'tag',
                             'onkeydown' => 'if (event.key === "Enter") { $("#tagAdd").click(); $("#tag").val(""); return false; }'
                         ]) ?>
@@ -57,10 +57,14 @@
             <div class="col-4">
                 <p><?= __d('cakebooru', 'Tags') ?></p>
                 <div v-for="(tag, i) in tag.tags" class="d-inline-block pr-1">
+                    <?php $this->Form->unlockField('tag') ?>
+                    <?= $this->Form->hidden('tag', [
+                        'v-bind:value' => 'tag',
+                        'v-bind:name' => 'tagInputName(i)'
+                    ]) ?>
                     <p class="chips" v-cloak v-bind:data-tag-index="i">
                         {{ tag }}
-                        <i class="material-icons"
-                            v-on:click="removeTag">close</i>
+                        <i class="material-icons" v-on:click="removeTag">close</i>
                     </p>
                 </div>
             </div>
