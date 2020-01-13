@@ -63,7 +63,13 @@ class PostsController extends AppController
 
         if ($this->request->is('post')) {
             try {
-                $post = $this->Posts->patchEntity($post, $this->request->getData(), [
+                //既存のタグが入力されていれば、idを指定する
+                $reqData = $this->request->getData();
+                if (isset($reqData['tags'])) {
+                    $reqData['tags'] = $this->Tags->createBtmData($reqData['tags']);
+                }
+
+                $post = $this->Posts->patchEntity($post, $reqData, [
                     'associated' => [
                         'Tags',
                     ]
@@ -76,7 +82,6 @@ class PostsController extends AppController
             } catch (Exception $ex) {
                 $this->Flash->error(__d('cakebooru', 'The post could not be saved. Please, try again.'));
             }
-
         }
     }
 

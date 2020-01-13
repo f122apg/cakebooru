@@ -39,14 +39,10 @@ class TagsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-        // $this->addBehavior('CounterCache', [
-        //     'Tags' => [
-        //         'tag_count' => [
-        //             'finder' => 'tag'
-        //         ]
-        //     ]
-        // ]);
-        $this->belongsToMany('Posts');
+        $this->belongsToMany('Posts', [
+            'through' => 'PostsTags',
+            'cascadeCallbacks' => true
+        ]);
     }
 
     /**
@@ -67,5 +63,51 @@ class TagsTable extends Table
         //     ->allowEmptyString('tag_count');
 
         return $validator;
+    }
+
+    /**
+     * タグからidを取得する
+     *
+     * @param string $tag タグ
+     * @return int|null ヒットすればintを返し、なければnull
+     */
+    public function getIdByTag($tag) : ?int
+    {
+        $entity = $this
+            ->find()
+            ->where(['Tags.tag' => $tag])
+            ->first();
+
+        return !is_null($entity) ? $entity->id : null;
+    }
+
+    /**
+     * belongsToMany用のデータを作成する
+     *
+     * @param array $datas 元データ
+     * @return array 加工済みデータ
+     */
+    public function createBtmData(array $datas) : array
+    {
+        //配列じゃない or 要素が0ならば加工せずに返す
+        if (!is_array($datas) || count($datas) === 0) {
+            return $datas;
+        }
+
+        foreach ($datas as $k => $data) {
+            //タグがなければ、次のループへ
+            if (!isset($data['tag'])) {
+                continue;
+            }
+
+            //既存タグがあれば、そのタグのidを入れる
+            $id = $this->getIdByTag($data['tag']);
+            if (!is_null($id)) {
+                $datas[$k]['id'] = $id;
+                unset($datas[$k]['tag']);
+            }
+        }
+
+        return $datas;
     }
 }

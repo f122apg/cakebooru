@@ -51,7 +51,10 @@ class PostsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsToMany('Tags');
+        $this->belongsToMany('Tags', [
+            'through' => 'PostsTags',
+            'cascadeCallbacks' => true
+        ]);
     }
 
     /**
