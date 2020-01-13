@@ -90,8 +90,17 @@ class PostsTagsTable extends Table
         return $rules;
     }
 
-    public function findTagging(Query $query, array $options)
+    /**
+     * カスタムfinder
+     * CounterCacheで利用する
+     * １つのタグがどれくらいのpostで使用されているか
+     *
+     * @param \Cake\ORM\Query $query クエリオブジェクト
+     * @param array $options オプション
+     * @return \Cake\ORM\Query
+     */
+    public function findTagging(Query $query, array $options) : Query
     {
-        return $query->group('tag_id');
+        return $query->find('all');
     }
 }
