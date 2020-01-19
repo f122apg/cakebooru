@@ -12,7 +12,7 @@
 
 @media screen and (min-width: 768px) {
     .thumbnail-container {
-        max-width: 300px;
+        max-width: 150px;
     }
 
     .card-columns {
@@ -23,10 +23,6 @@
 }
 
 @media screen and (min-width: 1140px) {
-    .thumbnail-container {
-        max-width: 500px;
-    }
-
     .card-columns {
         -webkit-column-count: 5;
         -moz-column-count: 5;
@@ -77,6 +73,10 @@
     border-radius: 15px;
     padding: 1px;
     cursor: pointer;
+}
+
+.chips + span.badge {
+    border-radius: 15px;
 }
 
 [v-cloak] {

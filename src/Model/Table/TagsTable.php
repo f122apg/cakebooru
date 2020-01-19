@@ -7,6 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Collection\Collection;
 
 /**
  * Tags Model
@@ -109,5 +110,36 @@ class TagsTable extends Table
         }
 
         return $datas;
+    }
+
+    /**
+     * Postsからタグを取得
+     *
+     * @param array|\App\Model\Entity\Post $posts Postsのentity配列またはentity
+     * @return array Tagsのentity
+     */
+    public function getTagsDistinctByPost($posts) : array
+    {
+        //to iterable
+        if (!is_iterable($posts)) {
+            $posts = [$posts];
+        }
+
+        $col = new Collection($posts);
+        $tags = $col->extract('tags'); //Tagsのentityだけを取得
+        //全てnullならば、タグはセットされていないとしてから配列を返す
+        if ($tags->every(fn($v) => $v === null)) {
+            return [];
+        }
+
+        //Tagsのentityからtagとtag_countだけ取ってくる
+        $tags = $tags
+            ->reject(fn($v) => !count($v)) //要素が0ならば削除
+            ->unfold() //平坦化
+            ->map(fn($v) => ['tag' => $v->tag, 'tag_count' => $v->tag_count]) //tagとtag_countの配列にする
+            ->toList(); //配列化
+
+        //重複を取り除きかつ、歯抜けの状態を直す
+        return array_values(array_unique($tags, SORT_REGULAR));
     }
 }

@@ -28,13 +28,18 @@ class PostsController extends AppController
      */
     public function index()
     {
+        $this->viewBuilder()->setLayout('TwitterBootstrap/posts');
         // $this->paginate = [
         //     'contain' => ['Users'],
         // ];
         // $posts = $this->paginate($this->Posts);
-        $posts = $this->Posts->find()->all();
+        $posts = $this->Posts
+            ->find()
+            ->contain(['Tags'])
+            ->all();
+        $tags = $this->Tags->getTagsDistinctByPost($posts);
 
-        $this->set(compact('posts'));
+        $this->set(compact('posts', 'tags'));
     }
 
     /**
@@ -46,9 +51,13 @@ class PostsController extends AppController
      */
     public function view($id = null)
     {
-        $post = $this->Posts->get($this->request->getQuery('id'));
+        $this->viewBuilder()->setLayout('TwitterBootstrap/posts');
+        $post = $this->Posts->get($this->request->getQuery('id'), [
+            'contain' => ['Tags']
+        ]);
+        $tags = $this->Tags->getTagsDistinctByPost($post);
 
-        $this->set('post', $post);
+        $this->set(compact('post', 'tags'));
     }
 
     /**
