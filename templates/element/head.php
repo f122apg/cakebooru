@@ -9,16 +9,14 @@ use Cake\Core\Configure;
 </title>
 <?= $this->Html->meta('icon') ?>
 
-<?php //M PLUS Roundedフォントを使用 ?>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+<?= $this->Html->css('normalize', ['block' => true]) ?>
+<?= $this->Html->css('fontawesome/all.min', ['block' => true]) ?>
+<?= $this->Html->css('material-icon.css', ['block' => true]) ?>
 <?= $this->Html->css('BootstrapUI.bootstrap.min', ['block' => true]) ?>
+
 <?= $this->Html->script('BootstrapUI.bootstrap.min', ['block' => true]) ?>
 <?= $this->Html->script('BootstrapUI.jquery.min') ?>
+<?= $this->Html->script('vue-development.js') ?>
 
 <?= $this->Html->css('style', ['block' => true]) ?>
 <?= $this->fetch('meta') ?>

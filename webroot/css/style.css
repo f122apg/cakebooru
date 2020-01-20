@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'M PLUS Rounded 1c';
+    src: url('../font/MPLUSRounded1c-Regular.woff') format('woff');
+}
+
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
 @media screen and (min-width: 320px) {
     .thumbnail-container {
         max-width: 100px;
