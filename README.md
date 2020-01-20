@@ -1,8 +1,21 @@
-# CakePHP Application Skeleton
+# Cakebooru
 
-[![Build Status](https://img.shields.io/travis/cakephp/app/master.svg?style=flat-square)](https://travis-ci.org/cakephp/app)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+## Requirement
+- PHP 7.4
+- PHP exts
+    - fileinfo
+    - gd2
+    - intl
+    - mbstring
+    - mysqli
+    - openssl
+    - pdo_mysql
+    - pdo_sqlite
+- MariaDB 10.4
+    - Recommended utf8mb4
+- Apache
+    - Please enable mod_rewrite
+
 
 A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
 
@@ -42,7 +55,7 @@ automated upgrades, so you have to do any updates manually.
 
 ## Configuration
 
-Read and edit the environment specific `config/app_local.php` and setup the 
+Read and edit the environment specific `config/app_local.php` and setup the
 `'Datasources'` and any other configuration relevant for your application.
 Other environment agnostic settings can be changed in `config/app.php`.
 
