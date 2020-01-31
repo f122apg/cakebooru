@@ -5,7 +5,7 @@
  */
 ?>
 <?php $this->Html->script('posts_add', ['block' => true]) ?>
-<?= $this->element('jsIntl') ?>
+<?= $this->element('js_const') ?>
 
 <div id="vue" class="posts form content container">
     <?= $this->Form->create($post, [

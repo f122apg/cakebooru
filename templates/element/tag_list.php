@@ -5,9 +5,16 @@ use Cake\Core\Configure;
     <p><?= __d('cakebooru', 'DisplayTags') ?></p>
 
     <?php if (isset($tags) && count($tags)) : ?>
-        <?php foreach($tags as $tag): ?>
+        <?php foreach($tags as $tag) : ?>
+            <?php $tagUrl = $this->Url->build([
+                'controller' => 'Posts',
+                'action' => 'index',
+                '?' => [
+                    'search' => $tag['tag']
+                ]
+            ]) ?>
             <div>
-                <a href="" class="chips mb-2">
+                <a href="<?= $tagUrl ?>" class="chips mb-2">
                     <?= $tag['tag'] ?>
                 </a>
                 <span class="badge badge-secondary">

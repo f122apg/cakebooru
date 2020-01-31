@@ -14,10 +14,20 @@ use Cake\Core\Configure;
             <?= $this->NavBar->link('Posts', '/posts') ?>
         </ul>
 
-        <!-- <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
+        <?php //CSRFトークンは必要ないので、CakePHPのヘルパーは使わない ?>
+        <form method="get" class="form-inline my-2 my-lg-0 mr-3">
+            <?= $this->Form->control('search', [
+                'type' => 'text',
+                'label' => false,
+                'required' => true,
+                'class' => 'form-control mr-sm-2',
+                'aria-label' => 'Search',
+                'placeholder' => 'Search'
+            ]) ?>
+            <?= $this->Form->button(__d('cakebooru', 'Search'), [
+                'class' => 'btn btn-outline-success my-2 my-sm-0'
+            ]) ?>
+        </form>
 
         <?php $postAddUrl = $this->Url->build([
             'controller' => 'Posts',

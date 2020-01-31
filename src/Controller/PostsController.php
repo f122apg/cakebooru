@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Error\Debugger;
+use Cake\Core\Configure;
 
 /**
  * Posts Controller
@@ -29,14 +30,60 @@ class PostsController extends AppController
     public function index()
     {
         $this->viewBuilder()->setLayout('TwitterBootstrap/posts');
+
+        if (!empty($this->request->getQuery('search'))) {
+            //タグ取得
+            $search = $this->request->getQuery('search');
+            $tags = explode(Configure::read('TagDelimiter'), $search);
+
+            $posts = $this->Posts
+                ->find()
+                ->contain(['Tags'])
+                ->matching('Tags', fn($q) => $q->where(function($exp, $query) {
+                    //とりあえず完全一致での検索
+                    //一部一致なら、LIKEを使うこと
+                    $tagCons = $this->Tags->getTagConditions($this->request->getQuery('search'));
+                    $exps = [];
+
+                    foreach ($tagCons as $k => $con) {
+                        switch ($k) {
+                            case 'NOT':
+                                $exps[] = $exp->notIn('Tags.tag', $con);
+                                break;
+                            case 'AND':
+                                $exps[] = $exp->and(array_map(fn($c) => ['Tags.tag' => $c], $con));
+                                break;
+                            case 'OR':
+                                $exps[] = $exp->in('Tags.tag', $con);
+                                break;
+                            case 'NORMAL':
+                                $exps[] = $exp->and(array_map(fn($c) => ['Tags.tag' => $c], $con));
+                                break;
+                        }
+                    }
+
+                    return $exp->and($exps);
+
+                    // return $exp->and([
+                    //     ['Tags.tag' => 'hiinu'],
+                    //     ['Tags.tag' => 'hiinu-kobo']
+                    // ]);
+
+                    //$exp->and($exps);
+                }))
+                ->all();
+            Debugger::dump($posts);
+        } else {
+            $posts = $this->Posts
+                ->find()
+                ->contain(['Tags'])
+                ->all();
+        }
+
         // $this->paginate = [
         //     'contain' => ['Users'],
         // ];
         // $posts = $this->paginate($this->Posts);
-        $posts = $this->Posts
-            ->find()
-            ->contain(['Tags'])
-            ->all();
         $tags = $this->Tags->getTagsDistinctByPost($posts);
 
         $this->set(compact('posts', 'tags'));

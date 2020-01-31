@@ -405,5 +405,15 @@ return [
     //uploaded image destination
     'UploadedImageDest' => '/path/to/your/uploaded_images',
     //thumbnail destination
-    'ThumbnailImageDest' => '/path/to/your/thumbnails'
+    'ThumbnailImageDest' => '/path/to/your/thumbnails',
+
+    //tag operator
+    'TagOperators' => [
+        //operator => reserve word
+        'AND' => 'AND',
+        'OR' => 'OR',
+        'NOT' => 'NOT'
+    ],
+    //tag delimiter
+    'TagDelimiter' => ' ',
 ];
