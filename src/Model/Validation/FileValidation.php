@@ -22,10 +22,10 @@ class FileValidation extends Validation
     /**
      * システムで受け取れる拡張子かチェック
      *
-     * @param Zend\Diactoros\UploadedFile $check アップロードされたファイル
+     * @param \Laminas\Diactoros\UploadedFile $check アップロードされたファイル
      * @return bool
      */
-    public function isAcceptExt(Zend\Diactoros\UploadedFile $check) : bool
+    public function isAcceptExt(\Laminas\Diactoros\UploadedFile $check) : bool
     {
         $currentLocale = setlocale(LC_ALL, 0);
         //multibyte support

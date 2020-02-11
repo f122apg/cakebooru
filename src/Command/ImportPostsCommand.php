@@ -64,8 +64,8 @@ class ImportPostsCommand extends Command
 
             //前準備
             $post = $this->Posts->newEmptyEntity();
-            $streamFactory = new \Zend\Diactoros\StreamFactory();
-            $uploadedFileFactory = new \Zend\Diactoros\UploadedFileFactory();
+            $streamFactory = new \Laminas\Diactoros\StreamFactory();
+            $uploadedFileFactory = new \Laminas\Diactoros\UploadedFileFactory();
 
             //ファイルをアップロードしたと見せかける
             $stream = $streamFactory->createStreamFromFile($sourceDir . $file);
