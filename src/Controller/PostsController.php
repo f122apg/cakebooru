@@ -34,45 +34,7 @@ class PostsController extends AppController
         if (!empty($this->request->getQuery('search'))) {
             //タグ取得
             $search = $this->request->getQuery('search');
-            $tags = explode(Configure::read('TagDelimiter'), $search);
-
-            $posts = $this->Posts
-                ->find()
-                ->contain(['Tags'])
-                ->matching('Tags', fn($q) => $q->where(function($exp, $query) {
-                    //とりあえず完全一致での検索
-                    //一部一致なら、LIKEを使うこと
-                    $tagCons = $this->Tags->getTagConditions($this->request->getQuery('search'));
-                    $exps = [];
-
-                    foreach ($tagCons as $k => $con) {
-                        switch ($k) {
-                            case 'NOT':
-                                $exps[] = $exp->notIn('Tags.tag', $con);
-                                break;
-                            case 'AND':
-                                $exps[] = $exp->and(array_map(fn($c) => ['Tags.tag' => $c], $con));
-                                break;
-                            case 'OR':
-                                $exps[] = $exp->in('Tags.tag', $con);
-                                break;
-                            case 'NORMAL':
-                                $exps[] = $exp->and(array_map(fn($c) => ['Tags.tag' => $c], $con));
-                                break;
-                        }
-                    }
-
-                    return $exp->and($exps);
-
-                    // return $exp->and([
-                    //     ['Tags.tag' => 'hiinu'],
-                    //     ['Tags.tag' => 'hiinu-kobo']
-                    // ]);
-
-                    //$exp->and($exps);
-                }))
-                ->all();
-            Debugger::dump($posts);
+            $posts = $this->Posts->getPostsBySearch($search);
         } else {
             $posts = $this->Posts
                 ->find()
