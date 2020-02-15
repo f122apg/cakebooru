@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Command;
 
+use App\Utility\File;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
@@ -23,6 +24,20 @@ use Cake\Console\ConsoleOptionParser;
 
 class ImportPostsCommand extends Command
 {
+    const ALLOW_EXT = [
+        'jpg',
+        'png',
+        'gif',
+        'bmp',
+    ];
+
+    const COMMANDS = [
+        'SOURCE_DIR' => 'source',
+        'TAGS_CSV' => 'csv'
+    ];
+
+    public $tags = [];
+
     /**
      * initialize
      *
@@ -32,6 +47,7 @@ class ImportPostsCommand extends Command
     {
         parent::initialize();
         $this->loadModel('Posts');
+        $this->loadModel('Tags');
     }
 
     /**
@@ -43,8 +59,11 @@ class ImportPostsCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io) : int
     {
-        $sourceDir = $args->getArgument('sourceDir');
-        $tagsCsv = $args->getArgument('tagsCsv');
+        $sourceDir = $args->getArgument(self::COMMANDS['SOURCE_DIR']);
+        $tagsCsv = $args->getArgument(self::COMMANDS['TAGS_CSV']);
+        if ($tagsCsv !== null) {
+            $this->setTags($tagsCsv);
+        }
 
         //サブディレクトリはとりあえず考慮しない
         $files = scandir($sourceDir);
@@ -60,19 +79,19 @@ class ImportPostsCommand extends Command
                 continue;
             }
 
+            $ext = File::getExt($file);
+            if (array_search($ext, self::ALLOW_EXT) === false) {
+                continue;
+            }
+
             $io->out($file . ' adding...', 0);
 
-            //前準備
-            $post = $this->Posts->newEmptyEntity();
-            $streamFactory = new \Laminas\Diactoros\StreamFactory();
-            $uploadedFileFactory = new \Laminas\Diactoros\UploadedFileFactory();
-
-            //ファイルをアップロードしたと見せかける
-            $stream = $streamFactory->createStreamFromFile($sourceDir . $file);
-            $post->file = $uploadedFileFactory->createUploadedFile($stream, null, UPLOAD_ERR_OK, $file);
-
-            $post->user_id = 1;
-            $post->tags = '';
+            //entity生成
+            $post = $this->Posts->newEntity([
+                'file' => File::createUploadedFile($sourceDir . $file),
+                'user_id' => 1,
+                'tags' => $this->Tags->createBtmData($this->getTags($file))
+            ]);
 
             if ($this->Posts->save($post)) {
                 $io->overwrite($file . ' added!');
@@ -90,14 +109,60 @@ class ImportPostsCommand extends Command
      */
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        $parser->addArgument('sourceDir', [
-            'help' => 'source images dir.'
+        $parser->addArgument(self::COMMANDS['SOURCE_DIR'], [
+            'help' => 'source images dir.',
+            'required' => true
         ]);
 
-        $parser->addArgument('tagsCsv', [
+        $parser->addArgument(self::COMMANDS['TAGS_CSV'], [
             'help' => 'tags csv.'
         ]);
 
         return $parser;
+    }
+
+    /**
+     * タグをプロパティにセットする
+     *
+     * @param string $csvFile csvのファイルパス
+     * @return void
+     */
+    public function setTags($csvFile): void
+    {
+
+
+        // mb_convert_encoding(file_get_contents($csv), "UTF-8", "sjis-win");
+
+        $fp = fopen($csvFile, 'r');
+        if (!$fp) {
+            return;
+        }
+
+        while(($line = fgetcsv($fp)) !== false) {
+            $fileName = '';
+
+            foreach ($line as $k => $tag) {
+                //1列目はファイル名とみなす
+                if ($k === 0) {
+                    $fileName = $tag;
+                    $this->tags[$fileName] = [];
+                } elseif (array_search($tag, $this->tags[$fileName]) === false) {
+                    $this->tags[$fileName][] = [
+                        'tag' => $tag
+                    ];
+                }
+            }
+        }
+    }
+
+    /**
+     * 画像ファイルに紐づく、csv内のタグを取得する
+     *
+     * @param string $fileName ファイル名
+     * @return array
+     */
+    public function getTags($fileName): array
+    {
+        return $this->tags[$fileName] ?? [];
     }
 }

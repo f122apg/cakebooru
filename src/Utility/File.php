@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace App\Utility;
 
 use Cake\Core\Configure;
+use Laminas\Diactoros\StreamFactory;
+use Laminas\Diactoros\UploadedFile;
+use Laminas\Diactoros\UploadedFileFactory;
 
 /**
  * File
@@ -57,5 +60,27 @@ class File
     public static function getThumbnailFileContent(string $filename) : string
     {
         return file_get_contents(Configure::read('ThumbnailImageDest') . '/' . $filename);
+    }
+
+    /**
+     * 疑似的にアップロードされたファイルを作成する
+     *
+     * @param string $filePath ファイルパス
+     * @return UploadedFile
+     */
+    public static function createUploadedFile(string $filePath) : UploadedFile
+    {
+        $streamFactory = new StreamFactory();
+        $uploadedFileFactory = new UploadedFileFactory();
+
+        //ファイルをアップロードしたと見せかける
+        $stream = $streamFactory->createStreamFromFile($filePath);
+
+        $currentLocale = setlocale(LC_ALL, 0);
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+        $filename = basename($filePath);
+        setlocale(LC_ALL, $currentLocale);
+
+        return $uploadedFileFactory->createUploadedFile($stream, null, UPLOAD_ERR_OK, $filename);
     }
 }
