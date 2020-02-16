@@ -1,10 +1,5 @@
 <?php
-use Cake\Core\Configure;
-?>
-<nav class="p-2">
-    <p><?= __d('cakebooru', 'DisplayTags') ?></p>
-
-    <?php if (isset($tags) && count($tags)) : ?>
+    if (isset($tags) && count($tags)) : ?>
         <?php foreach($tags as $tag) : ?>
             <?php $tagUrl = $this->Url->build([
                 'controller' => 'Posts',
@@ -23,6 +18,5 @@ use Cake\Core\Configure;
             </div>
         <?php endforeach ?>
     <?php else : ?>
-        <p><?= __d('cakebooru', 'No Tags') ?></p>
+        <p class="text-light"><?= __d('cakebooru', 'No Tags') ?></p>
     <?php endif ?>
-</nav>

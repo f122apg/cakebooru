@@ -34,7 +34,7 @@ class NavBarHelper extends Helper
             __d('cakebooru', $name),
             $href,
             array_merge(
-                ['class' => 'nav-link'],
+                ['class' => 'nav-link text-primary'],
                 $options
             )
         );

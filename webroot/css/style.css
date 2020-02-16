@@ -91,3 +91,37 @@ body {
 [v-cloak] {
     display: none;
 }
+
+.modal.left.fade .modal-dialog {
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+}
+
+.modal.left.show .modal-dialog {
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+}
+
+#drawer .modal-dialog {
+    max-width: 200px;
+    margin: 0;
+    height: 100%;
+}
+
+#drawer .modal-content {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+}
+
+#drawer .modal-header {
+    display: block;
+}
+
+#drawer .modal-title {
+    display: inline-block;
+}
+
+#drawer .modal-body {
+    overflow-y: scroll;
+}

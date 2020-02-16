@@ -24,7 +24,7 @@
 
     <div class="row">
         <div class="col-sm-2">
-            <?= $this->element('tag_list') ?>
+            <?= $this->element('tag_list_desktop') ?>
         </div>
         <main class="main col-sm-10">
             <?= $this->Flash->render() ?>
