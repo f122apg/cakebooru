@@ -18,5 +18,6 @@
             </div>
         <?php endforeach ?>
     <?php else : ?>
-        <p class="text-light"><?= __d('cakebooru', 'No Tags') ?></p>
+        <p class="text-light d-block d-sm-none"><?= __d('cakebooru', 'No Tags') ?></p>
+        <p class="d-sm-block d-none"><?= __d('cakebooru', 'No Tags') ?></p>
     <?php endif ?>
