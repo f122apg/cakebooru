@@ -17,16 +17,16 @@ if ($sp ?? false) {
 ?>
 
 <?php //CSRFトークンは必要ないので、CakePHPのヘルパーは使わない ?>
-<form method="get" class="<?= $class['form'] ?>">
-<?= $this->Form->control('search', [
-    'type' => 'text',
-    'label' => false,
-    'required' => true,
-    'class' => $class['text'],
-    'aria-label' => 'Search',
-    'placeholder' => 'Search'
-]) ?>
-<?= $this->Form->button(__d('cakebooru', 'Search'), [
-    'class' => $class['button']
-]) ?>
+<form method="get" class="<?= $class['form'] ?>" action="index">
+    <?= $this->Form->control('search', [
+        'type' => 'text',
+        'label' => false,
+        'required' => true,
+        'class' => $class['text'],
+        'aria-label' => 'Search',
+        'placeholder' => 'Search'
+    ]) ?>
+    <?= $this->Form->button(__d('cakebooru', 'Search'), [
+        'class' => $class['button']
+    ]) ?>
 </form>
