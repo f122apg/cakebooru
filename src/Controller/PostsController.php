@@ -29,7 +29,7 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $this->viewBuilder()->setLayout('TwitterBootstrap/posts');
+        $this->viewBuilder()->setLayout('posts');
 
         if (!empty($this->request->getQuery('search'))) {
             //タグ取得
@@ -60,7 +60,8 @@ class PostsController extends AppController
      */
     public function view($id = null)
     {
-        $this->viewBuilder()->setLayout('TwitterBootstrap/posts');
+        $this->viewBuilder()->setLayout('posts');
+
         $post = $this->Posts->get($this->request->getQuery('id'), [
             'contain' => ['Tags']
         ]);

@@ -41,7 +41,7 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->viewBuilder()->setLayout('TwitterBootstrap/default');
+        $this->viewBuilder()->setLayout('default');
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
