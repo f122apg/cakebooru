@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Utility;
 
-use Cake\Core\Configure;
 use App\Utility\File;
+use Cake\Core\Configure;
 
 /**
  * Image
@@ -38,7 +38,7 @@ class Image
      * base64で画像をエンコードする
      *
      * @param string $path 画像のパス
-     * @param string $dest 出力先 nullの場合、app.phpのUploadedImageDestに設定されているパスに出力する
+     * @param string $dest 出力先 nullの場合、app.phpのUploadedImagesに設定されているパスに出力する
      * @return string
      */
     public static function encodeImage(string $path, string $dest = null) : string
@@ -47,7 +47,7 @@ class Image
         $image = file_get_contents($path);
         $base64Image = base64_encode($image);
 
-        $fp = fopen($dest ?? Configure::read('UploadedImageDest') . '/' . $filename, 'w');
+        $fp = fopen($dest ?? File::getImagePath('UploadedImages', $filename), 'w');
         fwrite($fp, $base64Image);
         fclose($fp);
 
@@ -71,18 +71,19 @@ class Image
      * reference:https://qiita.com/suin/items/b01eebc05209dba0eb3e
      *
      * @param string $path 画像のパス
-     * @param string $dest 出力先 nullの場合、app.phpのThumbnailImageDestに設定されているパスに出力する
+     * @param string $dest 出力先 nullの場合、app.phpのThumbnailImagesに設定されているパスに出力する
      * @return string サムネイルのファイル名
      */
     public static function createThumbnail(string $path, string $dest = null, int $width = null, int $height = null) : string
     {
         if (is_null($dest)) {
             $filename = pathinfo($path, PATHINFO_FILENAME);
-            $dest = Configure::read('ThumbnailImageDest') . '/' . $filename . '.jpg';
+            $dest = File::getImagePath('ThumbnailImages', $filename) . '.jpg';
         }
 
         list($originalWidth, $originalHeight) = self::getImageSize($path);
-        list($canvasWidth, $canvasHeight) = self::getContainSize($originalWidth, $originalHeight, $width ?? Configure::read('ThumbnailWidth'), $height ?? Configure::read('ThumbnailHeight'));
+        $thumbnailSize = Configure::read('ThumbnailSize');
+        list($canvasWidth, $canvasHeight) = self::getContainSize($originalWidth, $originalHeight, $width ?? $thumbnailSize['width'], $height ?? $thumbnailSize['height']);
         self::saveResizeImage($path, $dest, $canvasWidth, $canvasHeight);
 
         return basename($dest);

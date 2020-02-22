@@ -402,10 +402,17 @@ return [
     //app name
     'AppName' => 'CakeBooru',
 
-    //uploaded image destination
-    'UploadedImageDest' => '/path/to/your/uploaded_images',
-    //thumbnail destination
-    'ThumbnailImageDest' => '/path/to/your/thumbnails',
+    'ImagesPaths' => [
+        //uploaded images destination
+        'UploadedImages' => 'webroot/uploaded',
+        //thumbnails destination
+        'ThumbnailImages' => 'webroot/thumbnails',
+    ],
+    //create thumbnail size
+    'ThumbnailSize' => [
+        'width' => 300,
+        'height' => 300,
+    ],
 
     //tag operator
     'TagOperators' => [

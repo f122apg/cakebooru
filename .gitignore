@@ -42,7 +42,9 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 
-# debug #
-#########
-/webroot/thumbnails
-/webroot/uploaded_imgs
+# CakeBooru #
+#############
+/webroot/thumbnails/*
+!/webroot/thumbnails/.gitkeep
+/webroot/uploaded/*
+!/webroot/uploaded/.gitkeep

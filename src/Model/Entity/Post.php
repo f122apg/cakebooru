@@ -99,6 +99,6 @@ class Post extends Entity
     {
         $this->filename = $this->uploadFile();
         $this->ext = File::getExt($this->filename);
-        $this->thumbnail = Image::createThumbnail(Configure::read('UploadedImageDest') . '/' . $this->filename);
+        $this->thumbnail = Image::createThumbnail(File::getImagePath('UploadedImages', $this->filename));
     }
 }
