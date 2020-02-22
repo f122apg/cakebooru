@@ -7,16 +7,16 @@
 <?php $this->Html->script('posts_add', ['block' => true]) ?>
 <?= $this->element('js_const') ?>
 
-<div id="vue" class="posts form content container">
+<div id="vue" class="container">
     <?= $this->Form->create($post, [
         'type' => 'file',
-        'id' => 'postForm'
+        'id' => 'postForm',
     ]) ?>
     <fieldset>
         <legend><?= __d('cakebooru', 'Add post') ?></legend>
         <?= $this->Form->hidden('user_id', ['value' => 1]) ?>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4 col-12">
                 <?php $this->Form->unlockField('file') ?>
                 <?= $this->Form->control('file', [
                     'id' => 'uploadFile',
@@ -26,14 +26,14 @@
                     'accept' => '.jpg,.jpeg,.png,.bmp,.gif'
                 ]) ?>
             </div>
-            <div class="col-8">
+            <div class="col-sm-8 col-12">
                 <div class="card image-preview d-none">
                     <img id="imagePreviewer" class="card-img-top" src="">
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-sm-4 col-12">
                 <div class="form-group">
                     <?= $this->Form->label('tag', __d('cakebooru', 'Tag')); ?>
                     <div class="input-group">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-sm-4 col-12">
                 <p><?= __d('cakebooru', 'Tags') ?></p>
                 <div v-for="(tag, i) in tag.tags" class="d-inline-block pr-1">
                     <?php $this->Form->unlockField('tag') ?>
@@ -68,7 +68,7 @@
                     </p>
                 </div>
             </div>
-            <div class="offset-4"></div>
+            <div class="offset-sm-4"></div>
         </div>
     </fieldset>
     <button type="submit" class="btn btn-primary">
