@@ -14,7 +14,7 @@ echo 'const jsMessage = {
 
 <?php
 use Cake\Core\Configure;
-$reservedWords = Configure::read('TagOperatorss');
+$reservedWords = Configure::read('TagOperators');
 $words = '[';
 foreach ($reservedWords as $v) {
     $words .= '"' . $v . '",';
