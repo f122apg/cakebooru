@@ -22,14 +22,16 @@
 <body>
     <?= $this->element('navbar') ?>
 
-    <div class="row">
-        <div class="col-sm-2">
-            <?= $this->element('tag_list_desktop') ?>
+    <main class="container">
+        <div class="row">
+            <div class="col-2 d-none d-sm-block">
+                <?= $this->element('tag_list_desktop') ?>
+            </div>
+            <div class="col-sm-10">
+                <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
+            </div>
         </div>
-        <main class="main col-sm-10">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </main>
-    </div>
+    </main>
 </body>
 </html>
