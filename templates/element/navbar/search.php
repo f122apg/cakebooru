@@ -24,7 +24,8 @@ if ($sp ?? false) {
         'required' => true,
         'class' => $class['text'],
         'aria-label' => 'Search',
-        'placeholder' => 'Search'
+        'placeholder' => 'Search',
+        'value' => $this->request->getQuery('search')
     ]) ?>
     <?= $this->Form->button(__d('cakebooru', 'Search'), [
         'class' => $class['button']
