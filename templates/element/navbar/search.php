@@ -17,7 +17,11 @@ if ($sp ?? false) {
 ?>
 
 <?php //CSRFトークンは必要ないので、CakePHPのヘルパーは使わない ?>
-<form method="get" class="<?= $class['form'] ?>" action="index">
+<?php $actionUrl = \Cake\Routing\Router::url([
+    'controller' => 'Posts',
+    'action' => 'index'
+]) ?>
+<form method="get" class="<?= $class['form'] ?>" action="<?= $actionUrl ?>">
     <?= $this->Form->control('search', [
         'type' => 'text',
         'label' => false,
