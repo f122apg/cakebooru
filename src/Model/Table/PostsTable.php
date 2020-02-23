@@ -129,7 +129,7 @@ class PostsTable extends Table
 
         return $this->find()
             ->contain(['Tags'])
-            ->where(['Posts.id IN' => $postIds])
+            ->where(['Posts.id IN' => count($postIds) ? $postIds : ''])
             ->all();
     }
 
@@ -196,8 +196,8 @@ class PostsTable extends Table
             ->matching('Tags', function (Query $q) use ($sqlCons) {
                 return $q->where($sqlCons);
             })
-            ->group('Posts.id')
-            ->having(['COUNT(Posts.id) >=' => count($sqlCons)])
+            // ->group('Posts.id')
+            // ->having(['COUNT(Posts.id) >=' => count($sqlCons)])
             ->all();
 
         return $q;

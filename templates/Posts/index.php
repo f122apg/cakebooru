@@ -26,5 +26,9 @@ use App\Utility\File;
             </a>
         </div>
     <?php endforeach ?>
+
+    <?php if($posts->isEmpty()): ?>
+        <?= __('No posts') ?>
+    <?php endif ?>
 </div>
 <div class="pt-3"></div>
