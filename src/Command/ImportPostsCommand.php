@@ -129,16 +129,22 @@ class ImportPostsCommand extends Command
      */
     public function setTags($csvFile): void
     {
-
-
-        // mb_convert_encoding(file_get_contents($csv), "UTF-8", "sjis-win");
-
-        $fp = fopen($csvFile, 'r');
-        if (!$fp) {
+        $csv = null;
+        try {
+            $csv = new \SplFileObject($csvFile);
+        } catch(Exception $ex) {
             return;
         }
 
-        while(($line = fgetcsv($fp)) !== false) {
+        if (!$csv->isReadable()) {
+            return;
+        }
+
+        $csv->setFlags(\SplFileObject::READ_CSV);
+
+        while(!$csv->eof()) {
+            //SJIS to UTF-8
+            $line = mb_convert_encoding($csv->fgetcsv(), 'UTF-8', 'SJIS');
             $fileName = '';
 
             foreach ($line as $k => $tag) {
@@ -152,6 +158,8 @@ class ImportPostsCommand extends Command
                     ];
                 }
             }
+
+            $csv->next();
         }
     }
 
